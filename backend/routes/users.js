@@ -1,15 +1,21 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/test', function(req, res, next) {
-  res.json([{
-  	id: 1,
-  	username: "test1"
-  }, {
-  	id: 2,
-  	username: "test2"
-  }]);
+// GET retrieves every user
+router.get('/', (req, res) => {
+  // build the users array
+  const users = [
+    {id: 1, username: "test1"},
+    {id: 2, username: "test2"},
+    {id: 3, username: "test3"},
+    {id: 4, username: "test4"},
+    {id: 5, username: "test5"},
+  ];
+  
+  // answer with the json
+  res.json({
+    data: users
+  });
 });
 
 module.exports = router;
