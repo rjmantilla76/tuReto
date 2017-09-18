@@ -1,16 +1,16 @@
-.navbar-nav{
+.navbar-nav {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
 }
-.navbar{
+
+.navbar {
     font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     border: none;
-    
 }
 
-.navbar-brand{
+.navbar-brand {
     font-size: 28px;
 }

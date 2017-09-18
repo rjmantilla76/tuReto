@@ -1,16 +1,19 @@
-.topText{
+.topText {
     font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 200;
     font-size: 24px;
     align-self: center;
     word-wrap: break-word;
 }
+
 .topText a {
     color: #C41756  
 }
+
 .topText a:visited {
     color: #9E126B  
 }
+
 h1 {
     font-family:  'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
@@ -18,31 +21,36 @@ h1 {
     align-self: center;
     word-wrap: break-word;
 }
-.challenger{
+
+.challenger {
     font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 200;
     font-size: 18px;
     font-style: italic;
     color: grey;
 }
-.date{
+
+.date {
     font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 100;
     font-size: 16px;
 }
-.challenge{
+
+.challenge {
     margin: 4% 3%; 
     border-color: #C41756;
     border-width: 2px;
     border-style: groove;
     padding: 3% 0%;
     width: 93%;
-    border-radius: 5%;
+    border-radius: 5px;
 }
-.profilePic{
+
+.profilePic {
     max-height: 100%;
 }
-.btn-primary{
+
+.btn-primary {
     background-color: #C41756;
     border-color: grey;
 }
