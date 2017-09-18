@@ -1,6 +1,8 @@
 <h1 align="center">
   <br>
-  <a href="https://uva.onlinejudge.org" target="_blank"><img src="https://github.com/rjmantilla76/uvaChallenge/raw/master/logo.png" alt="UVa Online Judge"></a>
+  <a href="https://uva.onlinejudge.org" target="_blank">
+    <img width="200px" src="https://github.com/rjmantilla76/uvaChallenge/raw/master/logo.png" alt="UVa Online Judge">
+  </a>
   <br>
   UVa Challenge
   <br>
