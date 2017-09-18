@@ -11,14 +11,26 @@ export default class Wall extends Component{
     }
      state = {wallInfo: []};
      componentDidMount(){
-         fetch('/shamewall/shame')  
+         fetch('/challenges')  
             .then(res =>{
             
                 return res.json();
             })
             .then(wallInfo => { 
-                console.log(wallInfo)
-                return this.setState({ wallInfo })});
+                let cont=1;
+                let newState = {wallInfo: wallInfo.map(challenge =>
+                ({id: "challenge_"+(cont++),
+                    username: challenge.victim.name,
+                    challengeDate: challenge.createdAt,
+                    challenger: challenge.challenger.name,
+                    problemUrl: challenge.problem.url,
+                    problemname: challenge.problem.name,
+                    avatar: challenge.victim.avatar
+                }))};
+                return this.setState(newState);
+            });
+
+              
      }
      onSelect= (active,direction)=>{
         console.log(`active=${active} && direction=${direction}`);
@@ -38,10 +50,10 @@ export default class Wall extends Component{
                 <div className="row">
                     <div className="col-1">&nbsp;</div>
                     <div className="profilePic col-5">
-                        <img className="img-responsive" src="https://c2.staticflickr.com/4/3562/3388550873_44bba5f99d_b.jpg" alt="Profile pic"/>
+                        <img className="img-responsive" src={wall.avatar} alt="Profile pic"/>
                     </div>
                     <div className="col-5">
-                        <center className="topText">The contender {wall.username} has failed doing the problem <a target="_blank" href={wall.problemUrl}>{wall.problemname}</a>!</center>
+                        <center className="topText">The contender {wall.username} hasn't solved the problem <a target="_blank" href={wall.problemUrl}>{wall.problemname}</a>!</center>
                         <center className="challenger">The challenge was issued by {wall.challenger}</center>
                         <div className="date pull-right">{prettydate.format(new Date(wall.challengeDate))}</div>
                     </div>
