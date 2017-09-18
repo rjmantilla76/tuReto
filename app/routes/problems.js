@@ -8,8 +8,8 @@ router.get('/', (req, res, next) => {
   let url = 'https://uhunt.onlinejudge.org/api/p';
 
   // perform the request to the uhunt api
-  request(url, (err, res, body) => {
-    if (err || res.statusCode !== 200) {
+  request(url, (err, reqRes, body) => {
+    if (err || reqRes.statusCode !== 200) {
       let defaultErr = {message: `The uhunt server returned status code ${res.statusCode}`};
       return next(err || defaultErr);
     }
@@ -18,5 +18,6 @@ router.get('/', (req, res, next) => {
     let problems = JSON.parse(body).map(problem => ({pid: problem[0], number: problem[1], title: problem[2]}));
     res.json(problems);
   });
-})
+});
 
+module.exports = router;

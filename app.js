@@ -12,6 +12,7 @@ mongoose.connect('mongodb://admin:abcd1234@ds137054.mlab.com:37054/webdev', {use
 const index = require('./app/routes/index');
 const users = require('./app/routes/users');
 const challenges = require('./app/routes/challenges');
+const problems = require('./app/routes/problems');
 
 // init express app + initial config
 const app = express();
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/challenges', challenges);
+app.use('/problems', problems);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
