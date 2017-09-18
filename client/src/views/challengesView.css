@@ -30,3 +30,19 @@ h1 {
     font-weight: 100;
     font-size: 16px;
 }
+.challenge{
+    margin: 4% 3%; 
+    border-color: #C41756;
+    border-width: 2px;
+    border-style: groove;
+    padding: 3% 0%;
+    width: 93%;
+    border-radius: 5%;
+}
+.profilePic{
+    max-height: 100%;
+}
+.btn-primary{
+    background-color: #C41756;
+    border-color: grey;
+}

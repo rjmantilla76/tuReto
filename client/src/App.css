@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  background: #FFF9FB; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(#FFF9FB, white); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#FFF9FB, white); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#FFF9FB, white); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#FFF9FB, white); /* Standard syntax */
 }
 
 .App-logo {
@@ -8,7 +13,7 @@
 }
 
 .App-header {
-  background-color: #222;
+  background-color: #444446;
   height: 150px;
   padding: 20px;
   color: white;
@@ -22,3 +27,4 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
