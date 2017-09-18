@@ -2,7 +2,7 @@
 
 UVa Challenge is whatever you want it to be. But mainly it does the following:
 
-  - Challenge users to do a problem you've already solved :triangular_flag_on_post:
+  - Challenge users to do a UVa OJ problem you've already solved :triangular_flag_on_post:
   - Solve challenges issued by other users -- Now you are the victim :sob:
   - After 48 hours, all the victims that failed will appear on **THE SHAME WALL** :scream:
 
