@@ -12,4 +12,4 @@ import registerServiceWorker from './registerServiceWorker';
 
 // render app & init service worker
 ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+// registerServiceWorker();
