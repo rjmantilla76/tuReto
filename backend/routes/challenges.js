@@ -8,7 +8,7 @@ const User = require('../models/users');
 // GET retrieves every active challenge
 router.get('/', (req, res, next) => {
   // get all unsolved challenges in db
-  const createdLimit = Date.now(); // TODO subtract 48hours
+  const createdLimit = Date.now(); // TODO subtract 48 hours
   Challenge.find({solved: false, createdAt: {$lt: createdLimit}}, null, {sort: {createdAt: -1}}, (err, challenges) => {
     if (err) return next(err);
     res.json(challenges);
@@ -42,24 +42,30 @@ router.post('/', (req, res, next) => {
     getProblem(problemId, (err, problem) => {
       if (err) return next(err);
   
-      // create the challenge in the db
-      const challenge = new Challenge({
-        challenger: {id: challenger.id, name: challenger.name, handle: challenger.handle, avatar: challenger.avatar},
-        victim: {id: victim.id, name: victim.name, handle: victim.handle},
-        problem: {id: problem.pid, name: problem.title, url: problem.url}
-      });
-      
-      challenge.save(err => {
+      // check if the challenger has solved the problem
+      hasSolved(challenger.id, problem.pid, (err, solved) => {
         if (err) return next(err);
+        if (!solved) return res.json({message: 'You have not solved this challenge yet! What a shame!'});
+    
+        // create the challenge in the db
+        const challenge = new Challenge({
+          challenger: {id: challenger.id, name: challenger.name, handle: challenger.handle, avatar: challenger.avatar},
+          victim: {id: victim.id, name: victim.name, handle: victim.handle, avatar: victim.avatar},
+          problem: {id: problem.pid, name: problem.title, url: problem.url}
+        });
         
-        // update daily limit + last challenge + created challenges for challenger
-        challenger.dailyLimt -= 1;
-        challenger.createdChallenger += 1;
-        challenger.lastChallenge = Date.now();
-        
-        challenger.save(err => {
+        challenge.save(err => {
           if (err) return next(err);
-          res.json({message: 'Challenge created! Now wait for your victim...'});
+          
+          // update daily limit + last challenge + created challenges for challenger
+          challenger.dailyLimt -= 1;
+          challenger.createdChallenger += 1;
+          challenger.lastChallenge = Date.now();
+          
+          challenger.save(err => {
+            if (err) return next(err);
+            res.json({message: 'Challenge created! Now wait for your victim...'});
+          });
         });
       });
     });
@@ -106,7 +112,8 @@ function getProblem(problemId, callback) {
     
     // parse the body, add url & go to callback with problem object
     const problem = JSON.parse(body);
-    problem.url = `https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=${problemId}`;
+    const volume = String(problem.num).substr(0, String(problem.num).length-2);
+    problem.url = `https://uva.onlinejudge.org/external/${volume}/${problem.num}.pdf`;
     callback(null, problem);
   })
 }
