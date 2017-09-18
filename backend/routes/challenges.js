@@ -29,7 +29,7 @@ router.post('/', (req, res, next) => {
     if (err) return next(err);
     
     // get the victim & the challenger
-    var challenger = users.find(user => user.id === challengerId);
+    const challenger = users.find(user => user.id === challengerId);
     const victim = users.find(user => user.id === victimId);
     
     if (!challenger || !victim) return res.status(404).json({message: 'Check those user ids!'});
@@ -58,8 +58,8 @@ router.post('/', (req, res, next) => {
           if (err) return next(err);
           
           // update daily limit + last challenge + created challenges for challenger
-          challenger.dailyLimt -= 1;
-          challenger.createdChallenger += 1;
+          challenger.dailyLimit -= 1;
+          challenger.createdChallenges += 1;
           challenger.lastChallenge = Date.now();
           
           challenger.save(err => {
