@@ -9,11 +9,6 @@ router.get('/login', (req, res) => {
     res.status(401).json({message: 'Go back and register!'});
 });
 
-// GET check if user is logged in
-router.get('/auth', auth.isAuth, (req, res) => {
-  res.json({});
-});
-
 // GET begin github authentication
 router.get('/auth/github', passportGithub.authenticate('github', {scope: ['user:email']}));
 
