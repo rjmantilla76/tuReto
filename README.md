@@ -1,4 +1,15 @@
-# UVa Challenge
+<h1 align="center">
+  <br>
+  <a href="https://uva.onlinejudge.org" target="_blank"><img src="https://github.com/jcbages/uva-online-judge-solutions/blob/master/logo.png" alt="UVa Online Judge"></a>
+  <br>
+  UVa Challenge
+  <br>
+  <br>
+</h1>
+
+<h4 align="center">:trophy: Solve challenges, avoid the shame :trophy:</h4>
+
+## About
 
 UVa Challenge is whatever you want it to be. But mainly it does the following:
 
@@ -6,7 +17,7 @@ UVa Challenge is whatever you want it to be. But mainly it does the following:
   - Solve challenges issued by other users -- Now you are the victim :sob:
   - After 48 hours, all the victims that failed will appear on **THE SHAME WALL** :scream:
 
-### Rules
+## Rules
 
 Sounds amazing right? But with great power, comes great responsibility!<br>
 That's why we got **RULES** you must follow to stay in the game:
