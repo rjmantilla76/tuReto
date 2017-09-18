@@ -22,6 +22,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+// use passport + other auth reqs
+const session = require('express-session');
+const passport = require('passport');
+
+app.use(session({
+  secret: 'mysecret',
+  cookie : {secure: false, maxAge: 3600000},
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 // use routes
 app.use('/', index);
 app.use('/users', users);

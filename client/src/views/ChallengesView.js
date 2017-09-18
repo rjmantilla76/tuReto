@@ -33,7 +33,7 @@ export default class Challenges extends Component{
   
   // fetch challenges from server
   getChallenges() {
-    fetch(`/challenges/byUser/${this.props.user}`)  
+    fetch(`/challenges/pending`)  
     .then(res => res.json())
     .then(challengeInfo => { 
       challengeInfo = challengeInfo.map((challenge, index) => this.buildChallenge(challenge, index));
@@ -56,7 +56,7 @@ export default class Challenges extends Component{
   }
   
   // get challenges as jsx
-  getWallChallenges() {
+  getChallengesRender() {
     return this.state.challengeInfo.map(challenge => (
       <div id ={challenge.id} key={challenge.id} style={{height: 250, width: '100%'}} className="challenge col-5 row">
         <div className="col-4">
@@ -84,7 +84,7 @@ export default class Challenges extends Component{
     return (
       <div style={{margin: 20}}>
         <h1>Pending Challenges</h1>
-        <div className="row">{this.getWallChallenges()}</div>
+        <div className="row">{this.getChallengesRender()}</div>
       </div>
     );
   }

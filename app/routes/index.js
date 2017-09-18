@@ -1,19 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
-// POST signup a new user
-router.post('/signup', (req, res, next) => {
+const auth = require('../auth/middleware');
+const passportGithub = require('../auth/github');
+
+// GET login an existing user
+router.get('/login', (req, res) => {
+    res.status(401).json({message: 'Go back and register!'});
+});
+
+// GET check if user is logged in
+router.get('/auth', auth.isAuth, (req, res) => {
   res.json({});
 });
 
-// POST login an existing user
-router.post('/login', (req, res, next) => {
-    res.json({});
+// GET begin github authentication
+router.get('/auth/github', passportGithub.authenticate('github', {scope: ['user:email']}));
+
+// GET callback for github authentication
+router.get('/auth/github/callback', passportGithub.authenticate('github', {failureRedirect: '/login'}), (req, res) => {
+  res.json(req.user);
 });
 
-// POST logout a user
-router.post('/logout', (req, res, next) => {
-    res.json({});
+// GET logout curr user
+router.get('/logout', (req, res, next) => {
+  req.session.destroy(_ => res.json({}));
 });
 
 module.exports = router;

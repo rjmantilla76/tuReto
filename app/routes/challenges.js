@@ -2,6 +2,8 @@ const request = require('request');
 const express = require('express');
 const router = express.Router();
 
+const auth = require('../auth/middleware');
+
 const Challenge = require('../models/challenges');
 const User = require('../models/users');
 
@@ -13,12 +15,12 @@ router.get('/', (req, res, next) => {
     if (err) return next(err);
     res.json(challenges);
   });
-})
+});
 
 // POST creates a new challenge
-router.post('/', (req, res, next) => {
+router.post('/', auth.isAuth, (req, res, next) => {
   // get post params
-  let challengerId = req.body.challengerId;
+  let challengerId = req.user.id;
   let victimId = req.body.victimId;
   let problemId = req.body.problemId;
   
@@ -73,22 +75,22 @@ router.post('/', (req, res, next) => {
 });
 
 // PUT sets a challenge as solved if it was really solved
-router.put('/:challengeId', (req, res, next) => {
+router.put('/:challengeId', auth.isAuth, (req, res, next) => {
   // find the challenge with the given id & valid date
   let createdLimit = Date.now() - (48 * 60 * 60 * 1000);
-  Challenge.findOne({_id: req.params.challengeId, createdAt: {$gte: createdLimit}}, (err, challenge) => {
+  Challenge.findOne({_id: req.params.challengeId, 'victim.id': req.user.id, createdAt: {$gte: createdLimit}}, (err, challenge) => {
     if (err) return next(err);
 
     // check if the challenge was really solved
     hasSolved(challenge.victim.id, challenge.problem.id, (err, solved) => {
       if (err) return next(err);
       if (!solved) return res.json({message: 'You have not solved this challenge yet! What a shame!'});
-      
+
       // set the challenge as solved & update
       challenge.solved = true;
       challenge.save(err => {
         if (err) return next(err);
-        
+
         // update victim solved challenged
         User.update({id: challenge.victim.id}, {$inc: {solvedChallenges: 1}}, err => {
           if (err) return next(err);
@@ -100,9 +102,9 @@ router.put('/:challengeId', (req, res, next) => {
 });
 
 // GET retrieve unsolved challenges for a userId
-router.get('/byuser/:userId', (req,res,next) => {
+router.get('/pending', auth.isAuth, (req,res,next) => {
   let createdLimit = Date.now() - (48 * 60 * 60 * 1000);
-  let query = {solved: false, createdAt: {$gte: createdLimit}, 'victim.id': req.params.userId};
+  let query = {solved: false, createdAt: {$gte: createdLimit}, 'victim.id': req.user.id};
   Challenge.find(query, null, {sort: {createdAt: -1}}, (err, challenges) => {
     if (err) return next(err);
     res.json(challenges);
@@ -126,7 +128,7 @@ function getProblem(problemId, callback) {
     let volume = String(problem.num).substr(0, String(problem.num).length-2);
     problem.url = `https://uva.onlinejudge.org/external/${volume}/${problem.num}.pdf`;
     callback(null, problem);
-  })
+  });
 }
 
 // check if a given user has already solved a given problem
