@@ -3,6 +3,10 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
+// load mongoose connection
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://admin:abcd1234@ds137054.mlab.com:37054/webdev', {useMongoClient: true});
+
 // load routes
 const index = require('./routes/index');
 const users = require('./routes/users');
