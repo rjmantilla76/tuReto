@@ -71,7 +71,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <NavBar currentView={this.state.currentView} logged={this.state.logged} callbackFunc={this.changeView} />
-        {this.getContent()}
+        {this.getMainComponent()}
       </div>
     );
   }
