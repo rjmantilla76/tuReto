@@ -13,7 +13,6 @@ export default class Wall extends Component{
      componentDidMount(){
          fetch('/challenges')  
             .then(res =>{
-            
                 return res.json();
             })
             .then(wallInfo => { 
@@ -46,7 +45,7 @@ export default class Wall extends Component{
             >
             
             {this.state.wallInfo.map(wall =>(
-            <div style={{height:400,width:"100%"}} id ={wall.id}>
+            <div style={{height:400,width:"100%"}} id ={wall.id} key={wall.id}>
                 <div className="row">
                     <div className="col-1">&nbsp;</div>
                     <div className="profilePic col-5">
