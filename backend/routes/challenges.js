@@ -8,7 +8,7 @@ const User = require('../models/users');
 // GET retrieves every active challenge
 router.get('/', (req, res, next) => {
   // get all unsolved challenges in db
-  const createdLimit = Date.now(); // TODO subtract 48 hours
+  const createdLimit = Date.now();  // TODO subtract 48 hours it's probably -(48*60*60*1000)
   Challenge.find({solved: false, createdAt: {$lt: createdLimit}}, null, {sort: {createdAt: -1}}, (err, challenges) => {
     if (err) return next(err);
     res.json(challenges);
@@ -95,6 +95,14 @@ router.put('/:challengeId', (req, res, next) => {
         });
       });
     });
+  });
+});
+
+//get unsolved challenges for a userId
+router.get('/byuser/:userId', (req,res,next)=>{
+  Challenge.find({solved: false, "victim.id": req.params.userId}, null, {sort: {createdAt: -1}}, (err, challenges) => {
+    if (err) return next(err);
+    res.json(challenges);
   });
 });
 
