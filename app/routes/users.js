@@ -1,20 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
+const User = require('../models/users');
+
 // GET retrieves every user
-router.get('/', (req, res) => {
-  // build the users array
-  const users = [
-    {id: 1, username: "test1"},
-    {id: 2, username: "test2"},
-    {id: 3, username: "test3"},
-    {id: 4, username: "test4"},
-    {id: 5, username: "test5"},
-  ];
-  
-  // answer with the json
-  res.json({
-    data: users
+router.get('/', (req, res, next) => {
+  // get all users in db
+  const fields = ['handle', 'name', 'avatar', 'level'];
+  User.find({}, fields, {sort: {handle: 1}}, (err, users) => {
+    if (err) return next(err);
+    res.json(users);
   });
 });
 
