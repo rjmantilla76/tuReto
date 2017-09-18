@@ -9,9 +9,9 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://admin:abcd1234@ds137054.mlab.com:37054/webdev', {useMongoClient: true});
 
 // load routes
-const index = require('./routes/index');
-const users = require('./routes/users');
-const challenges = require('./routes/challenges');
+const index = require('./app/routes/index');
+const users = require('./app/routes/users');
+const challenges = require('./app/routes/challenges');
 
 // init express app + initial config
 const app = express();
