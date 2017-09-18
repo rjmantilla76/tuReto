@@ -6,7 +6,7 @@ const path = require('path');
 
 // load mongoose connection
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://admin:abcd1234@ds137054.mlab.com:37054/webdev', {useMongoClient: true});
+mongoose.connect(process.env.MONGO_URI, {useMongoClient: true});
 
 // load routes
 const index = require('./app/routes/index');
