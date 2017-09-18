@@ -8,7 +8,7 @@ UVa Challenge is whatever you want it to be. But mainly it does the following:
 
 ### Rules
 
-Sounds amazing right? But with great power, comes great responsibility!
+Sounds amazing right? But with great power, comes great responsibility!<br>
 That's why we got **RULES** you must follow to stay in the game:
 
  - You can only challenge users on your same level :level_slider:
