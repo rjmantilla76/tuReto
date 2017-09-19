@@ -16,28 +16,39 @@ export default class App extends Component {
     super(props);
     
     // configure initial state
-    this.state = {
-      logged: false,
-      currentView: 'WallOfShame',
-      user: undefined
-    };
+    this.state = {logged: null, currentView: 'WallOfShame'};
     
     // bind functions for use un jsx
     this.changeView = this.changeView.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+  
+  // define behavior before rendering
+  componentWillMount() {
+    fetch('/auth', {credentials: 'same-origin'})
+    .then(res => {
+      let isLogged = res.status === 200 || res.status === 304;
+      this.setState({logged: isLogged});
+    });
+  }
+  
+  // logout officially from server
+  logout() {
+    fetch('/logout', {credentials: 'same-origin'})
+    .then(() => {
+      this.setState({logged: false, currentView: 'WallOfShame'})
+    });
   }
   
   // change view + state depending on event key
   changeView(eventKey) {
     switch (eventKey) {
-      // user-flow related events (login, logout, signup)
+      // user-flow related events (login, logout)
       case 'LogIn':
-        //TODO
-        this.setState({logged: true, currentView: 'WallOfShame', user: 162153});
         window.location.href = "/auth/github/";
         break;
       case 'LogOut':
-        // TODO
-        this.setState({logged: false, currentView: 'WallOfShame', user : undefined});
+        this.logout();
         break;
         
       // main-views related events (wall of shame, your challenges, issue challenge)
@@ -57,8 +68,8 @@ export default class App extends Component {
   getMainComponent() {
     switch (this.state.currentView) {
       case 'WallOfShame': return <Wall />;
-      case 'YourChallenges': return <Challenges user={this.state.user} />;
-      case 'Issue': return <Issue user={this.state.user} />;
+      case 'YourChallenges': return <Challenges logout={this.logout} />;
+      case 'Issue': return <Issue logout={this.logout} />;
       default: return <Wall />;
     }
   }

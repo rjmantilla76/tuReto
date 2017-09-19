@@ -24,13 +24,15 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 // use passport + other auth reqs
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 
 app.use(session({
-  secret: 'mysecret',
-  cookie : {secure: false, maxAge: 3600000},
+  secret: process.env.SESSION_SECRET,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie : {secure: false},
+  store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 app.use(passport.initialize());
 app.use(passport.session());

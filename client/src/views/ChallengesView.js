@@ -33,9 +33,10 @@ export default class Challenges extends Component{
   
   // fetch challenges from server
   getChallenges() {
-    fetch(`/challenges/pending`)  
-    .then(res => res.json())
-    .then(challengeInfo => { 
+    fetch(`/challenges/pending`, {credentials: 'same-origin'})  
+    .then(res => (res.status === 200 || res.status === 304) ? res.json() : null)
+    .then(challengeInfo => {
+      if (!challengeInfo) return this.props.logout();
       challengeInfo = challengeInfo.map((challenge, index) => this.buildChallenge(challenge, index));
       this.setState({challengeInfo: challengeInfo});
     });
@@ -49,10 +50,13 @@ export default class Challenges extends Component{
   // handle challenge solved button
   handleClick(challengeSend) {
     // inform the server that this challenge is done
-    fetch(`/challenges/${challengeSend}`, {method: 'PUT'})
-    .then(res => res.json())
-    .then(res => alert(res.message))
-    .then(this.getChallenges);
+    fetch(`/challenges/${challengeSend}`, {method: 'PUT', credentials: 'same-origin'})
+    .then(res => {
+      if (res.status !== 200 && res.status !== 304) return this.props.logout();
+      res = res.json();
+      alert(res.message);
+      this.getChallenges();
+    });
   }
   
   // get challenges as jsx

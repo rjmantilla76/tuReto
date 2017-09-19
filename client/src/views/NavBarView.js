@@ -7,7 +7,7 @@ import './NavBarView.css';
 import {Nav, NavItem, Navbar} from 'react-bootstrap';
 
 // component class + export
-export default class NaviBar extends Component {
+export default class NavBar extends Component {
   // get nav items based on state
   getNavItems() {
     // items container
@@ -27,20 +27,22 @@ export default class NaviBar extends Component {
       {eventKey: 'LogIn', title: 'Login'},
     ];
     
+    // just loaded items
+    items[null] = [
+      {eventKey: 'WallOfShame', title: 'Wall of Shame'}  
+    ]
+    
     // return nav items array based on state
     return items[this.props.logged].map((item, index) => {
-      if (item.eventKey === "LogIn"){
-        return (
+      // add github icon if necessary
+      let icon = (item.eventKey !== "LogIn") ? null : <i className="fa fa-fw fa-github"></i>;
+
+      return (
         <NavItem key={`nav_${index}`} eventKey={item.eventKey} selected={item.eventKey === this.props.currentView}>
-        {item.title}
-        <i className="fa fa-fw fa-github"></i>
-      </NavItem>);
-      } else {
-        return (<NavItem key={`nav_${index}`} eventKey={item.eventKey} selected={item.eventKey === this.props.currentView}>
           {item.title}
-          
-        </NavItem>);
-      }
+          {icon}
+        </NavItem>
+      );
     });
   }
   

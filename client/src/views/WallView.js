@@ -40,7 +40,7 @@ export default class Wall extends Component {
   // perform actions when component mount
   componentDidMount() {
     // fetch wall of shame data from server & update state
-    fetch('/challenges')  
+    fetch('/challenges')
     .then(res => res.json())
     .then(wallInfo => {
       wallInfo = wallInfo.map((challenge, index) => this.buildChallenge(challenge, index));

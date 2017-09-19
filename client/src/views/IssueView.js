@@ -22,9 +22,9 @@ export default class Issue extends Component {
   
   // fetch users from server
   getUsers() {
-    fetch('/users')  
-    .then(res => res.json())
-    .then(users => this.setState({users: users}));
+    fetch('/users', {credentials: 'same-origin'})  
+    .then(res => (res.status === 200 || res.status === 304) ? res.json() : null)
+    .then(users => users ? this.setState({users: users}) : this.props.logout());
   }
   
   // fetch problems from server
@@ -42,22 +42,27 @@ export default class Issue extends Component {
   
   // handle user selection
   selectUser(userId) {
+    console.log("setting curr user to -> " + userId);
     this.setState({currUser: userId});
   }
   
   // handle problem selection
   selectProblem(problemId) {
+    console.log("setting curr prob to -> " + problemId);
     this.setState({currProblem: problemId});
   }
   
   // handle send challenge button
   handleClick(challengeSend) {
     // try to create the challenge
-    let data = {challengedId: this.props.user, victimId: this.state.currUser, problemId: this.state.currProblem};
+    let data = {victimId: this.state.currUser, problemId: this.state.currProblem};
 
-    fetch('challenges', {method: 'POST', body: data})
-    .then(res => res.json())
-    .then(res => alert(res.message));
+    fetch('challenges', {method: 'POST', body: data, credentials: 'same-origin'})
+    .then(res => {
+      if (res.status !== 200 && res.status !== 304) return this.props.logout();
+      res = res.json();
+      alert(res.message);
+    });
   }
   
   // get users as jsx
