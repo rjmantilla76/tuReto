@@ -24,6 +24,10 @@ router.post('/', auth.isAuth, (req, res, next) => {
   let victimId = req.body.victimId;
   let problemId = req.body.problemId;
   
+  console.log('1: ' + challengerId);
+  console.log('2: ' + victimId);
+  console.log('3: ' + problemId);
+  
   if (!challengerId || !victimId || !problemId) return res.status(400).json({message: 'There\'re missing params!'});
   
   // retrieve both the victim + challenger

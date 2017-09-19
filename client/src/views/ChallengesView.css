@@ -54,3 +54,9 @@ h1 {
     background-color: #C41756;
     border-color: grey;
 }
+
+.empty-text {
+    color: grey;
+    font-size: 24px;
+    padding-top: 40px;
+}

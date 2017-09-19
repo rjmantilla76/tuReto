@@ -9,7 +9,7 @@ const User = require('../models/users');
 router.get('/', auth.isAuth, (req, res, next) => {
   // get all users in db
   let fields = ['id', 'handle', 'name', 'avatar', 'level'];
-  User.find({}, fields, {sort: {handle: 1}}, (err, users) => {
+  User.find({id: {$ne: req.user.id}}, fields, {sort: {handle: 1}}, (err, users) => {
     if (err) return next(err);
     res.json(users);
   });

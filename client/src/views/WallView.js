@@ -64,7 +64,7 @@ export default class Wall extends Component {
           </div>
           <div className="col-5">
             <center className="topText">
-              The contender {wall.username} hasn't solved the problem
+              The contender {wall.username} hasn't solved the problem{' '}
               <a target="_blank" href={wall.problemUrl}>{wall.problemName}</a>!
             </center>
             <center className="challenger">The challenge was issued by {wall.challenger}</center>

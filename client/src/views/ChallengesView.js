@@ -34,7 +34,7 @@ export default class Challenges extends Component{
   // fetch challenges from server
   getChallenges() {
     fetch(`/challenges/pending`, {credentials: 'same-origin'})  
-    .then(res => (res.status === 200 || res.status === 304) ? res.json() : null)
+    .then(res => (res.status !== 401) ? res.json() : null)
     .then(challengeInfo => {
       if (!challengeInfo) return this.props.logout();
       challengeInfo = challengeInfo.map((challenge, index) => this.buildChallenge(challenge, index));
@@ -51,10 +51,10 @@ export default class Challenges extends Component{
   handleClick(challengeSend) {
     // inform the server that this challenge is done
     fetch(`/challenges/${challengeSend}`, {method: 'PUT', credentials: 'same-origin'})
-    .then(res => {
-      if (res.status !== 200 && res.status !== 304) return this.props.logout();
-      res = res.json();
-      alert(res.message);
+    .then(res => (res.status !== 401) ? res.json() : null)
+    .then(json => {
+      if (!json) return this.props.logout();
+      alert(json.message);
       this.getChallenges();
     });
   }
@@ -85,10 +85,13 @@ export default class Challenges extends Component{
   
   // render function, required as always
   render() {
+    let content = <div className="col-12 empty-text">There're no pending challenges!</div>;
+    if (this.state.challengeInfo.length > 0) content = this.getChallengesRender();
+    
     return (
       <div style={{margin: 20}}>
         <h1>Pending Challenges</h1>
-        <div className="row">{this.getChallengesRender()}</div>
+        <div className="row">{content}</div>
       </div>
     );
   }

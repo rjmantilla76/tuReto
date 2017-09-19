@@ -23,7 +23,7 @@ export default class Issue extends Component {
   // fetch users from server
   getUsers() {
     fetch('/users', {credentials: 'same-origin'})  
-    .then(res => (res.status === 200 || res.status === 304) ? res.json() : null)
+    .then(res => (res.status !== 401) ? res.json() : null)
     .then(users => users ? this.setState({users: users}) : this.props.logout());
   }
   
@@ -57,11 +57,19 @@ export default class Issue extends Component {
     // try to create the challenge
     let data = {victimId: this.state.currUser, problemId: this.state.currProblem};
 
-    fetch('challenges', {method: 'POST', body: data, credentials: 'same-origin'})
-    .then(res => {
-      if (res.status !== 200 && res.status !== 304) return this.props.logout();
-      res = res.json();
-      alert(res.message);
+    fetch('/challenges', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+      credentials: 'same-origin'
+    })
+    .then(res => (res.status !== 401) ? res.json() : null)
+    .then(json => {
+      if (!json) return this.props.logout();
+      alert(json.message);
     });
   }
   
