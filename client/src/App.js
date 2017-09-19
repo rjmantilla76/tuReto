@@ -25,7 +25,7 @@ export default class App extends Component {
     // bind functions for use un jsx
     this.changeView = this.changeView.bind(this);
   }
-  
+  //No se realiza el login del usuario en el front, hay problemas despues cuando se acceden a otras views desde heroku
   // change view + state depending on event key
   changeView(eventKey) {
     switch (eventKey) {
