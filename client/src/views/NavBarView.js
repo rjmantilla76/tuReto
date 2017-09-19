@@ -24,16 +24,24 @@ export default class NaviBar extends Component {
     // not logged items
     items[false] = [
       {eventKey: 'WallOfShame', title: 'Wall of Shame'},
-      {eventKey: 'SignUp', title: 'Signup'},
       {eventKey: 'LogIn', title: 'Login'},
     ];
     
     // return nav items array based on state
-    return items[this.props.logged].map((item, index) => (
-      <NavItem key={`nav_${index}`} eventKey={item.eventKey} selected={item.eventKey === this.props.currentView}>
+    return items[this.props.logged].map((item, index) => {
+      if (item.eventKey === "LogIn"){
+        return (
+        <NavItem key={`nav_${index}`} eventKey={item.eventKey} selected={item.eventKey === this.props.currentView}>
         {item.title}
-      </NavItem>
-    ));
+        <i className="fa fa-fw fa-github"></i>
+      </NavItem>);
+      } else {
+        return (<NavItem key={`nav_${index}`} eventKey={item.eventKey} selected={item.eventKey === this.props.currentView}>
+          {item.title}
+          
+        </NavItem>);
+      }
+    });
   }
   
   // render function, required as always

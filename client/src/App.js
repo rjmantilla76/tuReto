@@ -30,13 +30,10 @@ export default class App extends Component {
   changeView(eventKey) {
     switch (eventKey) {
       // user-flow related events (login, logout, signup)
-      case 'SignUp':
-        //TODO
-        this.setState({logged: true, currentView: 'WallOfShame', user: 162153});
-        break;
       case 'LogIn':
         //TODO
         this.setState({logged: true, currentView: 'WallOfShame', user: 162153});
+        window.location.href = "/auth/github/";
         break;
       case 'LogOut':
         // TODO

@@ -65,7 +65,7 @@ export default class Challenges extends Component{
         
         <div className="col-7">
           <center className="topText">
-            {challenge.challenger} challenged you to solve
+            {challenge.challenger} challenged you to solve &nbsp;
             <a target="_blank" href={challenge.problemUrl}>{challenge.problemname}</a>!
           </center>
           <div className="date pull-right">{prettydate.format(new Date(challenge.challengeDate))}</div>
