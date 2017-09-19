@@ -6,12 +6,13 @@ const path = require('path');
 
 // load mongoose connection
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://admin:abcd1234@ds137054.mlab.com:37054/webdev', {useMongoClient: true});
+mongoose.connect(process.env.MONGO_URI, {useMongoClient: true});
 
 // load routes
-const index = require('./routes/index');
-const users = require('./routes/users');
-const challenges = require('./routes/challenges');
+const index = require('./app/routes/index');
+const users = require('./app/routes/users');
+const challenges = require('./app/routes/challenges');
+const problems = require('./app/routes/problems');
 
 // init express app + initial config
 const app = express();
@@ -21,10 +22,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+// use passport + other auth reqs
+const session = require('express-session');
+const passport = require('passport');
+
+app.use(session({
+  secret: 'mysecret',
+  cookie : {secure: false, maxAge: 3600000},
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 // use routes
 app.use('/', index);
 app.use('/users', users);
 app.use('/challenges', challenges);
+app.use('/problems', problems);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
