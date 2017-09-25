@@ -39,7 +39,7 @@ export default class App extends Component {
       this.setState({logged: false, currentView: 'WallOfShame'})
     });
   }
-  
+  //No se realiza el login del usuario en el front, hay problemas despues cuando se acceden a otras views desde heroku
   // change view + state depending on event key
   changeView(eventKey) {
     switch (eventKey) {
